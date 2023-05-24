@@ -43,7 +43,7 @@
 .main .background .cloud .cloud1{
     /* 设置宽高 */
     width: 100px;
-    height: 35px;
+    height: 30px;
     /* 设置背景图片 */
     background-image: url("../images/场景图2.png");
     /* 设置背景偏移量 */
@@ -79,12 +79,12 @@
 /* 设置小恐龙(玩家) */
 .main .role .dinosaur{
     /* 设置宽高 */
-    width: 83px;
-    height: 100px;
+    width: 82px;
+    height: 95px;
     /* 设置背景图片 */
     background-image: url("../images/场景图2.png");
     /* 设置背景偏移量 */
-    background-position: -1856px 0;
+    background-position: -1860px 0;
     /* 设置定位 */
     position: absolute;
     /* 设置偏移量 */
@@ -92,72 +92,82 @@
     left: 50px;
     /* 设置外边距 */
     margin-bottom: 0;
+    /* 跑动动画 */
+    animation: dinosaurRun 100ms steps(2) alternate infinite;
+    overflow: visible;
 
     /* background-color: aqua; */
 }
 
 /* 跳跃动画 */
 @keyframes dinosaurJump {
-    from{
-        margin-bottom: 0;
+    from, to{
+        background-position-x: -1680px;
     }
-    to{
-        margin-bottom: 100px;
+}
+
+/* 跑动动画 */
+@keyframes dinosaurRun {
+    from {
+        background-position: -1856px 0;
+    }
+    to {
+        background-position: -2032px 0;
     }
 }
 
 /* 设置障碍物 */
 /* 小仙人掌 */
 .main .background .obstacle .s-cactus1 {
-    width: 35px;
+    width: 30px;
     height: 84px;
     background-image: url("../images/场景图2.png");
-    background-position: -445px 0;
+    background-position: -448px 0;
     position: absolute;
     bottom: 0;
     /* 设置左侧位移 */
     margin-left: 921px;
 }.main .background .obstacle .s-cactus2 {
-    width: 35px;
+    width: 30px;
     height: 84px;
     background-image: url("../images/场景图2.png");
-    background-position: -480px 0;
+    background-position: -482px 0;
     position: absolute;
     bottom: 0;
     /* 设置左侧位移 */
     margin-left: 921px;
 }.main .background .obstacle .s-cactus3 {
-    width: 35px;
+    width: 30px;
     height: 84px;
     background-image: url("../images/场景图2.png");
-    background-position: -515px 0;
+    background-position: -516px 0;
     position: absolute;
     bottom: 0;
     /* 设置左侧位移 */
     margin-left: 921px;
 }.main .background .obstacle .s-cactus4 {
-    width: 35px;
+    width: 30px;
     height: 84px;
     background-image: url("../images/场景图2.png");
-    background-position: -549px 0;
+    background-position: -550px 0;
     position: absolute;
     bottom: 0;
     /* 设置左侧位移 */
     margin-left: 921px;
 }.main .background .obstacle .s-cactus5 {
-    width: 35px;
+    width: 31px;
     height: 84px;
     background-image: url("../images/场景图2.png");
-    background-position: -582px 0;
+    background-position: -584px 0;
     position: absolute;
     bottom: 0;
     /* 设置左侧位移 */
     margin-left: 921px;
 }.main .background .obstacle .s-cactus6 {
-    width: 35px;
+    width: 30px;
     height: 84px;
     background-image: url("../images/场景图2.png");
-    background-position: -617px 0;
+    background-position: -618px 0;
     position: absolute;
     bottom: 0;
     /* 设置左侧位移 */
