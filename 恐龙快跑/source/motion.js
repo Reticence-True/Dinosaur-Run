@@ -1,5 +1,5 @@
 
-let speed = 1 // 设置速度(默认为1)
+let speed = 3 // 设置速度(默认为3)
 
 // #region 背景地面的移动
 let ground = document.getElementsByClassName("ground")[0]  // 获取地面元素
@@ -28,9 +28,9 @@ let summomInterval
 // 创建云朵
 setInterval(() => {
     // 云朵生成时间
-    summomInterval = Math.floor(Math.random()*2500)
+    summomInterval = Math.floor(Math.random()*8000)
     if(summomInterval < 1000){
-        summomInterval += 1500
+        summomInterval += 8000
     }
     // console.log(summomInterval)
     setTimeout(() => {
@@ -95,17 +95,23 @@ dinosaurMove()
 /* 小恐龙跳跃动画 */
 // 添加键盘监听
 let timeout = null
+// 节流阀
+let animating = false
 document.body.addEventListener("keydown", function(event){
     if(event.key == " "){
-        clearInterval(timer)
-        dinosaur.style.backgroundPositionX = -1680 + "px"
-        dinosaur.style.animation = "dinosaurJump 600ms 2 alternate"
-        if(parseInt(getComputedStyle(dinosaur, null)["marginBottom"]) === 0){
-            clearTimeout(timeout)
-            timeout = setTimeout(()=>{
-                dinosaur.removeAttribute("style")
-                dinosaurMove()
-            }, 1220)
+        if(!animating){
+            animating = true
+            clearInterval(timer)
+            dinosaur.style.backgroundPositionX = -1680 + "px"
+            dinosaur.style.animation = "dinosaurJump 600ms 2 alternate"
+            if(parseInt(getComputedStyle(dinosaur, null)["marginBottom"]) === 0){
+                clearTimeout(timeout)
+                timeout = setTimeout(()=>{
+                    dinosaur.removeAttribute("style")
+                    animating = false
+                    dinosaurMove()
+                }, 1220)
+            }
         }
     }
 })
