@@ -7,7 +7,7 @@ var obstacleStroage = []
 // 保存障碍物位置
 var obstaclePosArr = []
 // 场上同时出现的最大障碍物数
-const maxObstacleNum = 1
+const maxObstacleNum = 1 // 默认 1
 
 // 创建障碍物
 function createObstacle() {

@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/animate.min.css"/>
     <link rel="stylesheet" href="../css/style.css">
     <title>恐龙游戏</title>
     <script type="module" src="../js/main.js" defer></script>
-    <!-- <script type="module" src="../source/motion.js" defer></script> -->
 </head>
 
 <body>
@@ -24,13 +24,28 @@
         <div class="role">
             <div class="dinosaur"></div> <!-- 小恐龙 -->
         </div>
+        <!-- 计分板 -->
         <div class="score-board">
             <div class="score score1"></div>
             <div class="score score2"></div>
             <div class="score score3"></div>
             <div class="score score4"></div>
             <div class="score score5"></div>
-        </div> <!-- 计分板 -->
+            <div class="score score6"></div>
+        </div>
+        <!-- 成就框 -->
+        <div class="animate__animated animate__fadeInDown achievement-container" style="display: none;">
+            <div class="achievement-title">
+                <span class="award-achievement">获得成就</span>
+            </div>
+            <div class="achievement">
+                <div class="award-icon"></div>
+                <div class="context">
+                    <div class="achievement-context">月球漫步</div>
+                    <div class="vice-context">我不叫喂，叫我 “嫦娥”</div>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 

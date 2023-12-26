@@ -1,3 +1,12 @@
+// #region 配置文件可修改参数
+// 场上同时出现的最大云朵数
+const maxCloudNum = 5 // 默认 5
+// 云朵最大垂直偏移量
+const cloudMaxOffset = 921
+// 云朵之间距离偏移量
+const cloudsDistance = 400 // 默认 400
+// #endregion
+
 // 获取云朵所在父元素
 const cloudFather = document.getElementsByClassName("cloud")[0]
 // 云朵数组
@@ -6,10 +15,6 @@ const cloudArr = ["cloud1", "cloud2"]
 var cloudStorage = []
 // 保存云朵位置
 var cloudPosArr = []
-// 场上同时出现的最大云朵数
-var maxCloudNum = 4
-// 云朵最大偏移量
-var cloudMaxOffset = 921
 
 // 创建云朵
 function createCloud() {
@@ -24,8 +29,8 @@ function createCloud() {
 
         // 检测本云朵与上一个云朵之间的距离
         if (cloudStorage.length >= 1) {
-            if (cloudMaxOffset - cloudPosArr[cloudPosArr.length - 1] < 400) {
-                // 小于100px，删除该云，重新渲染
+            if (cloudMaxOffset - cloudPosArr[cloudPosArr.length - 1] < cloudsDistance) {
+                // 小于 [cloudsDistance] px，删除该云，重新渲染
                 cloud = null
                 return
             }

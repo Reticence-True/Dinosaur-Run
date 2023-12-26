@@ -1,5 +1,6 @@
 * {
     margin: 0;
+    padding: 0;
     list-style: none;
 }
 
@@ -208,4 +209,67 @@
     height: 25px;
     background-image: url("../source/images/场景图2.png");
     background-position: -1291px 0;
+}
+
+/* 设置成就框 */
+.achievement-container {
+    width: 350px;
+    border: 5px double #535353;
+    border-radius: 15px;
+    background: #fff;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    margin-left: -175px;
+    overflow: hidden;
+    user-select: none;
+}
+
+.achievement-title {
+    text-align: center;
+    background: #535353;
+}
+.achievement-title .award-achievement {
+    color: #fff;
+}
+
+.achievement {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: left;
+}
+
+.achievement .award-icon {
+    width: 110px;
+    height: 80px;
+    background: url("../source/images/奖杯.svg") no-repeat center;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+}
+
+.achievement .context {
+    width: 100%;
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.achievement .context .achievement-context,
+.achievement .context .vice-context {
+    width: 100%;
+    text-align: center;
+}
+
+.achievement .context .achievement-context {
+    font-size: 1.75rem;
+    font-weight: bolder;
+    color: #535353;
+}
+
+.achievement .context .vice-context {
+    font-size: 0.95rem;
+    font-weight: bold;
+    color: #535353;
 }

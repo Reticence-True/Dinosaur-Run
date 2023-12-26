@@ -1,11 +1,18 @@
 // 设置小恐龙最大跳跃高度 (单位：px)
-const maxJumpHeight = 130
-const g = 9.8 // 重力加速度
+let maxJumpHeight
+let g // 重力加速度
+
 var dinosaur = document.getElementsByClassName("dinosaur")[0]  // 获取小恐龙
+var vertivalInitVelocity // 设置小恐龙跳跃时初速度
 // 节流阀
 var animating = false
-// 设置小恐龙跳跃时初速度
-var vertivalInitVelocity = Math.sqrt(2 * g * maxJumpHeight)
+
+/* 数据传递 */
+function getData(tmaxJumpHeight, tg){
+    maxJumpHeight = tmaxJumpHeight;
+    g = tg;
+    vertivalInitVelocity = Math.sqrt(2 * g * maxJumpHeight) // 设置小恐龙跳跃时初速度
+}
 
 /* 小恐龙跳跃动画 */
 // 小恐龙跳跃函数
@@ -47,17 +54,19 @@ function dinosaurDownFall(initVelocity, initTime, maxHeight) {
     }
 }
 
-// 添加键盘监听
-document.body.addEventListener("keydown", function (event) {
-    if (event.key == " ") {
+// 键盘跳跃
+function keyPressJump(key){
+    if (key == " ") {
         if (!animating) {
             animating = true
             dinosaur.style.animationName = "dinosaurJump" // 小恐龙站立动画
             dinosaurJump(vertivalInitVelocity, 0)
         }
     }
-})
+}
 
 export var dino = {
-    dinosaurJump // 恐龙跳跃函数
+    getData,
+    dinosaurJump, // 恐龙跳跃函数
+    keyPressJump
 }
