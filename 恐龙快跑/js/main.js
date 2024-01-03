@@ -12,10 +12,15 @@ let scoreBouns = 1; // 积分倍率
 let maxJumpHeight = 180 // 默认为 180
 let g = 1.63 // 重力加速度 // 默认为 9.8
 let isJump = false
+// 场上同时出现的最大云朵数
+let maxCloudNum = 5 // 默认 5
+// 云朵最大垂直偏移量
+let cloudMaxOffset = 921
+// 云朵之间距离偏移量
+let cloudsDistance = 400 // 默认 400
 // #endregion
 
 const speed = 3; // 物体移动像素
-const achisList = []; // 获得成就队列
 // 物体生成时间
 var summomInterval = 0,
     preSummonInterval = 0
@@ -24,7 +29,9 @@ var summomInterval = 0,
 // #region 游戏初始化
 function gameInit() {
     // 传递数据
+    achi.getData(maxJumpHeight, g, maxCloudNum, cloudMaxOffset, cloudsDistance)
     dino.getData(maxJumpHeight, g)
+    cld.getData(maxCloudNum, cloudMaxOffset, cloudsDistance)
 
     // 游戏开始
     gamePlay();
@@ -36,7 +43,7 @@ function gamePlay() {
     spawnObject()
     move()
     scoreCount() // 积分开始
-    achievementCheck() // 成就检查
+    achi.achievementCheck() // 成就检查
 }
 // #endregion
 
@@ -111,39 +118,6 @@ document.body.addEventListener("keydown", function (event) {
 function scoreCount() {
     sre.scoreCount(scoreBouns)
 }
-// #endregion
-
-// #region 成就检查函数
-function achievementCheck() {
-    var showTime = 0; // 成就显示时间
-    setInterval(() => { // 每 1s 检查一次成就
-        var move2TheMoon = achi.move2TheMoon(g, isJump);
-        if (move2TheMoon) {
-            achisList.push(move2TheMoon)
-            isJump = false
-        }
-
-        console.log("object");
-
-        achisList.forEach(e => {
-            setTimeout(() => { // 成就显示
-                achi.showAchievement(e.achi, e.vice)
-            }, showTime);
-            setTimeout(() => { // 延迟显示3s后隐藏
-                achi.hideAchievement()
-            }, (showTime + 3000));
-
-            showTime += 1000
-        })
-
-        achisList.length = 0 // 数组清空
-        showTime = 0; // 成就显示时间清空
-
-    }, 500);
-}
-
-// achievementCheck()
-
 // #endregion
 
 // #region 资源回收函数

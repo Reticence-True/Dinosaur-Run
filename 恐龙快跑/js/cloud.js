@@ -1,10 +1,10 @@
 // #region 配置文件可修改参数
 // 场上同时出现的最大云朵数
-const maxCloudNum = 5 // 默认 5
+let maxCloudNum
 // 云朵最大垂直偏移量
-const cloudMaxOffset = 921
+let cloudMaxOffset
 // 云朵之间距离偏移量
-const cloudsDistance = 400 // 默认 400
+let cloudsDistance
 // #endregion
 
 // 获取云朵所在父元素
@@ -15,6 +15,13 @@ const cloudArr = ["cloud1", "cloud2"]
 var cloudStorage = []
 // 保存云朵位置
 var cloudPosArr = []
+
+/* 数据传递 */
+function getData(tMaxCloudNum, tCloudMaxOffset, tCloudsDistance){
+    maxCloudNum = tMaxCloudNum;
+    cloudMaxOffset = tCloudMaxOffset;
+    cloudsDistance = tCloudsDistance;
+}
 
 // 创建云朵
 function createCloud() {
@@ -65,6 +72,7 @@ function cloudMove(speed) {
 }
 
 export var cld = {
+    getData,
     createCloud, // 创造云朵函数
     cloudMove // 云朵移动函数
 }
