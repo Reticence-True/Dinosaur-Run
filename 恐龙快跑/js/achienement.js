@@ -8,7 +8,7 @@ const achisList = []; // 获得成就队列
 let scoreBouns; // 积分倍率
 let maxJumpHeight; // 默认为 180
 let g; // 重力加速度 // 默认为 9.8
-let isJump;
+let isJump = false; // 是否跳跃
 // 场上同时出现的最大云朵数
 let maxCloudNum; // 默认 5
 // 云朵最大垂直偏移量
@@ -24,6 +24,9 @@ function getData(tMaxJumpHeight, tG, tMaxCloudNum, tCloudMaxOffset, tCloudsDista
     maxCloudNum = tMaxCloudNum
     cloudMaxOffset = tCloudMaxOffset
     cloudsDistance = tCloudsDistance
+}
+function toggleJump(){ // 改变跳跃状态
+    isJump = !isJump;
 }
 // 成就显示
 function showAchievement(achi, vi) {
@@ -53,7 +56,7 @@ function achievementCheck() {
     setInterval(() => { // 每 500ms 检查一次成就
         // 成就：月球漫步
         var move2TheMoon = achi.move2TheMoon(g, isJump);
-        console.log("move2TheMoon", move2TheMoon);
+        console.log("move2TheMoon", move2TheMoon, g, isJump);
         if (move2TheMoon) {
             achisList.push(move2TheMoon)
             isJump = false
@@ -77,9 +80,10 @@ function achievementCheck() {
 
         if (achievementDsiplaying >= 0) { // 当没有成就显示时，才重置新成就
             achisList.forEach(e => {
+                let ele = e.c
                 setTimeout(() => { // 成就显示
                     achievementDsiplaying-- // p操作
-                    achi.showAchievement(e.achi, e.vice)
+                    achi.showAchievement(ele.achi, ele.vice)
                 }, showTime);
 
                 showTime += 3000
@@ -164,6 +168,7 @@ function RainingRaining(maxClouds, minCloudsDistance) {
 
 export var achi = {
     getData,
+    toggleJump,
     showAchievement,
     hideAchievement,
     achievementCheck,

@@ -103,14 +103,18 @@ function spawnObject() {
 // #region 键盘跳跃函数
 function keyPressJump(key) {
     isJump = true;
+    achi.toggleJump() // 修改成就的是否跳跃
     setTimeout(() => {
         isJump = false
+        achi.toggleJump() // 修改成就的是否跳跃
     }, 1000);
     dino.keyPressJump(key); // 恐龙跳跃
 }
 // 键盘跳跃
 document.body.addEventListener("keydown", function (event) {
-    keyPressJump(event.key)
+    if (event.key == " ") {
+        keyPressJump(event.key)
+    }
 })
 // #endregion
 

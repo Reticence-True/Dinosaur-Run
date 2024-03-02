@@ -18,7 +18,10 @@ function scoreAdd(scoreBouns) {
     for (let i = 0; i < scoreLength; i++) {
         bitScore = tScore % 10
         tScore = parseInt(tScore / 10)
-        scoreObj[i].style.backgroundPosition = `${numPos[bitScore]}px 0` // 分数渲染
+        if (scoreObj[i])
+            scoreObj[i].style.backgroundPosition = `${numPos[bitScore]}px 0`; // 分数渲染
+        else
+            break
     }
     score += 1 * scoreBouns // 乘以 积分倍率
 }
