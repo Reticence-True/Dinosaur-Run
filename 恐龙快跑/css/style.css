@@ -56,7 +56,7 @@
     /* 设置定位 */
     position: absolute;
     /* 设置左位移 */
-    margin-left: 921px;
+    transform: translateX(921px);
 }
 
 .main .background .cloud .cloud2 {
@@ -70,7 +70,7 @@
     /* 设置定位 */
     position: absolute;
     /* 设置左位移 */
-    margin-left: 921px;
+    transform: translateX(921px);
 }
 
 /* 设置角色 */
@@ -135,9 +135,9 @@
     background-image: url("../source/images/场景图2.png");
     background-position: -448px 0;
     position: absolute;
-    bottom: 0;
+    bottom: -5px;
     /* 设置左侧位移 */
-    margin-left: 921px;
+    transform: translateX(921px);
 }
 
 .main .background .obstacle .s-cactus2 {
@@ -146,9 +146,9 @@
     background-image: url("../source/images/场景图2.png");
     background-position: -482px 0;
     position: absolute;
-    bottom: 0;
+    bottom: -5px;
     /* 设置左侧位移 */
-    margin-left: 921px;
+    transform: translateX(921px);
 }
 
 .main .background .obstacle .s-cactus3 {
@@ -157,9 +157,9 @@
     background-image: url("../source/images/场景图2.png");
     background-position: -516px 0;
     position: absolute;
-    bottom: 0;
+    bottom: -5px;
     /* 设置左侧位移 */
-    margin-left: 921px;
+    transform: translateX(921px);
 }
 
 .main .background .obstacle .s-cactus4 {
@@ -168,9 +168,9 @@
     background-image: url("../source/images/场景图2.png");
     background-position: -550px 0;
     position: absolute;
-    bottom: 0;
+    bottom: -5px;
     /* 设置左侧位移 */
-    margin-left: 921px;
+    transform: translateX(921px);
 }
 
 .main .background .obstacle .s-cactus5 {
@@ -179,9 +179,9 @@
     background-image: url("../source/images/场景图2.png");
     background-position: -584px 0;
     position: absolute;
-    bottom: 0;
+    bottom: -5px; 
     /* 设置左侧位移 */
-    margin-left: 921px;
+    transform: translateX(921px);
 }
 
 .main .background .obstacle .s-cactus6 {
@@ -192,7 +192,7 @@
     position: absolute;
     bottom: 0;
     /* 设置左侧位移 */
-    margin-left: 921px;
+    transform: translateX(921px);
 }
 
 /* 设置计分板 */
@@ -229,6 +229,7 @@
     text-align: center;
     background: #535353;
 }
+
 .achievement-title .award-achievement {
     color: #fff;
 }

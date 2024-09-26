@@ -1,18 +1,8 @@
-// 设置小恐龙最大跳跃高度 (单位：px)
-let maxJumpHeight
-let g // 重力加速度
+import { GLOBAL } from "./global.js"
 
 var dinosaur = document.getElementsByClassName("dinosaur")[0]  // 获取小恐龙
-var vertivalInitVelocity // 设置小恐龙跳跃时初速度
 // 节流阀
 var animating = false
-
-/* 数据传递 */
-function getData(tmaxJumpHeight, tg){
-    maxJumpHeight = tmaxJumpHeight;
-    g = tg;
-    vertivalInitVelocity = Math.sqrt(2 * g * maxJumpHeight) // 设置小恐龙跳跃时初速度
-}
 
 /* 小恐龙跳跃动画 */
 // 小恐龙跳跃函数
@@ -22,8 +12,8 @@ function dinosaurJump(initVelocity, initTime) {
 
 // 向上跳跃
 function dinosaurUpJump(initVelocity, initTime) {
-    var height = initVelocity * initTime - 0.5 * g * initTime * initTime
-    var v = initVelocity - g * initTime
+    var height = initVelocity * initTime - 0.5 * GLOBAL.g * initTime * initTime
+    var v = initVelocity - GLOBAL.g * initTime
     dinosaur.style.marginBottom = height + "px"
     initTime += 0.08
     if (v > 0) {
@@ -39,8 +29,8 @@ function dinosaurUpJump(initVelocity, initTime) {
 
 // 自由落体
 function dinosaurDownFall(initVelocity, initTime, maxHeight) {
-    var height = maxHeight - 0.5 * g * initTime * initTime
-    var v = g * initTime
+    var height = maxHeight - 0.5 * GLOBAL.g * initTime * initTime
+    var v = GLOBAL.g * initTime
     dinosaur.style.marginBottom = height + "px"
     initTime += 0.08
     if (v <= initVelocity) {
@@ -60,13 +50,12 @@ function keyPressJump(key){
         if (!animating) {
             animating = true
             dinosaur.style.animationName = "dinosaurJump" // 小恐龙站立动画
-            dinosaurJump(vertivalInitVelocity, 0)
+            dinosaurJump(GLOBAL.vertivalInitVelocity, 0)
         }
     }
 }
 
 export var dino = {
-    getData,
     dinosaurJump, // 恐龙跳跃函数
     keyPressJump
 }

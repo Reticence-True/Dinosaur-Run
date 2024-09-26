@@ -1,4 +1,6 @@
 // achievement.js
+import { GLOBAL } from './global.js';
+
 const achievement = document.querySelector(".achievement-context") // 主成就
 const vice = document.querySelector(".vice-context") // 附加信息
 const achievementContainer = document.querySelector(".achievement-container")
@@ -6,25 +8,9 @@ const achisList = []; // 获得成就队列
 
 // 设置小恐龙最大跳跃高度 (单位：px)
 let scoreBouns; // 积分倍率
-let maxJumpHeight; // 默认为 180
-let g; // 重力加速度 // 默认为 9.8
 let isJump = false; // 是否跳跃
-// 场上同时出现的最大云朵数
-let maxCloudNum; // 默认 5
-// 云朵最大垂直偏移量
-let cloudMaxOffset;
-// 云朵之间距离偏移量
-let cloudsDistance; // 默认 400
 // #endregions
 
-/* 数据传递 */
-function getData(tMaxJumpHeight, tG, tMaxCloudNum, tCloudMaxOffset, tCloudsDistance) {
-    maxJumpHeight = tMaxJumpHeight
-    g = tG
-    maxCloudNum = tMaxCloudNum
-    cloudMaxOffset = tCloudMaxOffset
-    cloudsDistance = tCloudsDistance
-}
 function toggleJump(){ // 改变跳跃状态
     isJump = !isJump;
 }
@@ -55,25 +41,25 @@ function achievementCheck() {
 
     setInterval(() => { // 每 500ms 检查一次成就
         // 成就：月球漫步
-        var move2TheMoon = achi.move2TheMoon(g, isJump);
-        console.log("move2TheMoon", move2TheMoon, g, isJump);
+        var move2TheMoon = achi.move2TheMoon(GLOBAL.g, isJump);
+        // console.log("move2TheMoon", move2TheMoon, GLOBAL.g, isJump);
         if (move2TheMoon) {
             achisList.push(move2TheMoon)
             isJump = false
         }
         // 成就：飞入太空
-        var flyInSpace = achi.flyInSpace(maxJumpHeight, isJump);
+        var flyInSpace = achi.flyInSpace(GLOBAL.maxJumpHeight, isJump);
         if (move2TheMoon) {
             achisList.push(flyInSpace)
             isJump = false
         }
         // 成就：今日多云
-        var cloudsDay = achi.cloudsDay(g, isJump);
+        var cloudsDay = achi.cloudsDay(GLOBAL.g, isJump);
         if (cloudsDay) {
             achisList.push(cloudsDay)
         }
         // 成就：要下雨了？
-        var RainingRaining = achi.RainingRaining(g, isJump);
+        var RainingRaining = achi.RainingRaining(GLOBAL.g, isJump);
         if (RainingRaining) {
             achisList.push(RainingRaining)
         }
@@ -157,7 +143,7 @@ function cloudsDay(maxClouds, minCloudsDistance) {
  * @return {Object}
  */
 function RainingRaining(maxClouds, minCloudsDistance) {
-    if (maxClouds >= 13 && mminCloudsDistance <= 50) {
+    if (maxClouds >= 13 && minCloudsDistance <= 50) {
         return {
             achi: "要下雨了？",
             vice: "伞伞，我的伞伞~（可云状）"
@@ -167,7 +153,6 @@ function RainingRaining(maxClouds, minCloudsDistance) {
 }
 
 export var achi = {
-    getData,
     toggleJump,
     showAchievement,
     hideAchievement,

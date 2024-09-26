@@ -24,7 +24,7 @@ function createObstacle() {
         // 添加障碍物到列表中
         obstacleStroage.push(obstacleItem)
         // 监测障碍物位置
-        var obstaclePos = parseInt(getComputedStyle(obstacleItem, null)["marginLeft"])
+        var obstaclePos = parseFloat(getComputedStyle(obstacleItem, null)["transform"].split(',')[4])
         // 添加障碍物位置
         obstaclePosArr.push(obstaclePos)
     }
@@ -34,7 +34,7 @@ function createObstacle() {
 function obstacleMove(speed) {
     for (var i = 0; i < obstacleStroage.length; i++) {
         obstaclePosArr[i] -= speed
-        obstacleStroage[i].style.marginLeft = obstaclePosArr[i] + "px"
+        obstacleStroage[i].style.transform = `translateX(${obstaclePosArr[i]}px)`
         // console.log(obstacleStroage[i].offsetLeft);
         if (obstaclePosArr[i] < -35) {
             obstacle.removeChild(obstacleStroage[i])
