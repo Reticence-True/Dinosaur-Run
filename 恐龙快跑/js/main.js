@@ -1,3 +1,4 @@
+import { GLOBAL } from "./global.js"
 import { bg } from "./background.js"
 import { cld } from "./cloud.js"
 import { dino } from "./dinosaur.js"
@@ -6,33 +7,8 @@ import { obs } from "./obstacle.js"
 import { util } from "./functions.js"
 import { achi } from "./achienement.js"
 
-// #region 配置文件可修改参数
-// 设置小恐龙最大跳跃高度 (单位：px)
-let scoreBouns = 1; // 积分倍率
-let maxJumpHeight = 180 // 默认为 180
-let g = 1.63 // 重力加速度 // 默认为 9.8
-let isJump = false
-// 场上同时出现的最大云朵数
-let maxCloudNum = 5 // 默认 5
-// 云朵最大垂直偏移量
-let cloudMaxOffset = 921
-// 云朵之间距离偏移量
-let cloudsDistance = 400 // 默认 400
-// #endregion
-
-const speed = 3; // 物体移动像素
-// 物体生成时间
-var summomInterval = 0,
-    preSummonInterval = 0
-    ;
-
 // #region 游戏初始化
 function gameInit() {
-    // 传递数据
-    achi.getData(maxJumpHeight, g, maxCloudNum, cloudMaxOffset, cloudsDistance)
-    dino.getData(maxJumpHeight, g)
-    cld.getData(maxCloudNum, cloudMaxOffset, cloudsDistance)
-
     // 游戏开始
     gamePlay();
 }
@@ -76,9 +52,9 @@ function gameover() {
 
 // #region 移动函数
 function move() {
-    bg.groundMove(speed)
-    cld.cloudMove(speed)
-    obs.obstacleMove(speed)
+    bg.groundMove(GLOBAL.speed)
+    cld.cloudMove(GLOBAL.speed)
+    obs.obstacleMove(GLOBAL.speed)
     requestAnimationFrame(move)
 }
 // #endregion
@@ -86,15 +62,15 @@ function move() {
 // #region 生成函数
 function spawnObject() {
     const spawnInterval = setInterval(() => {
-        summomInterval = Math.floor(Math.random() * 5000) // 随机生成时间
-        if (Math.abs(preSummonInterval - summomInterval) <= 3500) {
-            preSummonInterval = summomInterval
+        GLOBAL.summomInterval = Math.floor(Math.random() * 5000) // 随机生成时间
+        if (Math.abs(GLOBAL.preSummonInterval - GLOBAL.summomInterval) <= 3500) {
+            GLOBAL.preSummonInterval = GLOBAL.summomInterval
         } else {
             // console.log("生成");
             obs.createObstacle()
             cld.createCloud()
         }
-    }, summomInterval)
+    }, GLOBAL.summomInterval)
 
     return spawnInterval;
 }
@@ -102,10 +78,10 @@ function spawnObject() {
 
 // #region 键盘跳跃函数
 function keyPressJump(key) {
-    isJump = true;
+    GLOBAL.isJump = true;
     achi.toggleJump() // 修改成就的是否跳跃
     setTimeout(() => {
-        isJump = false
+        GLOBAL.isJump = false
         achi.toggleJump() // 修改成就的是否跳跃
     }, 1000);
     dino.keyPressJump(key); // 恐龙跳跃
@@ -120,7 +96,7 @@ document.body.addEventListener("keydown", function (event) {
 
 // #region 分数记录函数
 function scoreCount() {
-    sre.scoreCount(scoreBouns)
+    sre.scoreCount(GLOBAL.cloudsDistance)
 }
 // #endregion
 
