@@ -1,0 +1,16 @@
+{
+  "name": "dinosaur_run",
+  "version": "1.0.0",
+  "description": "恐龙快跑游戏",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npx nodemon ./server/server.js"
+  },
+  "author": "Silence_缄默",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.0",
+    "nodemon": "^3.1.7"
+  }
+}

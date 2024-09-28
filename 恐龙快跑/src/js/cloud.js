@@ -3,7 +3,7 @@ import { GLOBAL } from "./global.js"
 // 获取云朵所在父元素
 const cloudFather = document.getElementsByClassName("cloud")[0]
 // 云朵数组
-const cloudArr = ["cloud1", "cloud2"]
+var cloudArr = ["cloud1", "cloud2"]
 // 存储云朵
 var cloudStorage = []
 // 保存云朵位置
@@ -18,7 +18,8 @@ function createCloud() {
         // 随机数：选择云朵
         let selCloud = Math.round(Math.random())
         // 随机数：生成云朵位置偏移
-        let spawnCloudOffset = Math.round(Math.random() * 2000)
+        // let spawnCloudOffset = Math.round(Math.random() * 2000)
+        let spawnCloudOffset = 0
 
         // 设置云朵
         cloud.setAttribute("class", cloudArr[selCloud])
@@ -62,7 +63,17 @@ function cloudMove(speed) {
     }
 }
 
+/**
+ * 资源回收函数
+ */
+function recycle() {
+    cloudArr = null
+    cloudStorage = null
+    cloudPosArr = null
+}
+
 export var cld = {
     createCloud, // 创造云朵函数
-    cloudMove // 云朵移动函数
+    cloudMove, // 云朵移动函数
+    recycle
 }

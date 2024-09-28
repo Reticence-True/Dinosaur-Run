@@ -1,13 +1,13 @@
 // 获取障碍物所在父元素
 const obstacle = document.querySelector(".obstacle")
 // 障碍物数组
-const obstacleArr = ["s-cactus1", "s-cactus2", "s-cactus3", "s-cactus4", "s-cactus5", "s-cactus6"]
+let obstacleArr = ["s-cactus1", "s-cactus2", "s-cactus3", "s-cactus4", "s-cactus5", "s-cactus6"]
 // 存储障碍物
-var obstacleStroage = []
+let obstacleStroage = []
 // 保存障碍物位置
-var obstaclePosArr = []
+let obstaclePosArr = []
 // 场上同时出现的最大障碍物数
-const maxObstacleNum = 1 // 默认 1
+let maxObstacleNum = 1 // 默认 1
 
 // 创建障碍物
 function createObstacle() {
@@ -44,7 +44,18 @@ function obstacleMove(speed) {
     }
 }
 
+/**
+ * 资源回收函数
+ */
+function recycle(){
+    obstacleArr = null
+    obstacleStroage = null
+    obstaclePosArr = null 
+    maxObstacleNum = undefined
+}
+
 export var obs = {
     createObstacle, // 障碍物创造函数
-    obstacleMove // 障碍物移动函数
+    obstacleMove, // 障碍物移动函数
+    recycle
 }

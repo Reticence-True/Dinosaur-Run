@@ -9,6 +9,14 @@ function groundMove(speed) {
 }
 // #endregion
 
+/**
+ * 资源回收函数
+ */
+function recycle(){
+    pos = undefined
+}
+
 export var bg = {
-    groundMove // 地面移动
+    groundMove, // 地面移动
+    recycle
 }

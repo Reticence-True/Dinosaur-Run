@@ -5,12 +5,25 @@ import { dino } from "./dinosaur.js"
 import { sre } from "./score.js"
 import { obs } from "./obstacle.js"
 import { util } from "./functions.js"
-import { achi } from "./achienement.js"
+import { achi } from "./achievement.js"
+
+let animationMovingID = undefined // 移动动画帧ID
+let spawnIntervalID = undefined // 生成对象定时器函数ID
 
 // #region 游戏初始化
-function gameInit() {
-    // 游戏开始
+async function gameInit() {
+    // 游戏就绪
+    await gameReady()
+
+
     gamePlay();
+}
+// #endregion
+
+// #region 游戏就绪
+async function gameReady() {
+    // 异步获取成就信息
+    await achi.getAchievements()
 }
 // #endregion
 
@@ -19,7 +32,8 @@ function gamePlay() {
     spawnObject()
     move()
     scoreCount() // 积分开始
-    achi.achievementCheck() // 成就检查
+    // 成就检查
+    achi.achievementCheck()
 }
 // #endregion
 
@@ -31,78 +45,102 @@ function gamePause() {
 
 // #region 游戏继续
 function gameContinue() {
-
+    GLOBAL.gameStop = false
+    gamePlay()
 }
 // #endregion
 
-
 document.body.addEventListener("keydown", function (event) {
-    if (event.key == "s") {
+    if (event.key === "s" || event.key === "S") {
         gameover()
     }
 })
 
-
-
 // #region 游戏结束
 function gameover() {
-    cancelAnimationFrame(move)
+    // 标志位
+    GLOBAL.gameStop = true
+    // 恐龙动画停止
+    dino.dinosaurStop()
+    // 取消跳跃事件
+    document.body.removeEventListener("keydown", jumpEvent)
+    // 资源回收
+    recycle()
 }
 // #endregion
 
 // #region 移动函数
 function move() {
+    // 游戏停止
+    if (GLOBAL.gameStop) {
+        cancelAnimationFrame(animationMovingID)
+        return
+    }
+
     bg.groundMove(GLOBAL.speed)
     cld.cloudMove(GLOBAL.speed)
     obs.obstacleMove(GLOBAL.speed)
-    requestAnimationFrame(move)
+    animationMovingID = requestAnimationFrame(move)
 }
 // #endregion
 
 // #region 生成函数
 function spawnObject() {
-    const spawnInterval = setInterval(() => {
+    if (GLOBAL.gameStop) {
+        clearInterval(spawnIntervalID)
+        spawnIntervalID = undefined
+        return
+    }
+
+    spawnIntervalID = setInterval(() => {
         GLOBAL.summomInterval = Math.floor(Math.random() * 5000) // 随机生成时间
         if (Math.abs(GLOBAL.preSummonInterval - GLOBAL.summomInterval) <= 3500) {
             GLOBAL.preSummonInterval = GLOBAL.summomInterval
         } else {
-            // console.log("生成");
             obs.createObstacle()
             cld.createCloud()
         }
     }, GLOBAL.summomInterval)
-
-    return spawnInterval;
 }
 // #endregion
 
 // #region 键盘跳跃函数
 function keyPressJump(key) {
-    GLOBAL.isJump = true;
-    achi.toggleJump() // 修改成就的是否跳跃
-    setTimeout(() => {
-        GLOBAL.isJump = false
-        achi.toggleJump() // 修改成就的是否跳跃
-    }, 1000);
+    if (!GLOBAL.isJump) {
+        GLOBAL.isJump = true;
+        // 成就检查
+        achi.achievementCheck()
+    }
     dino.keyPressJump(key); // 恐龙跳跃
 }
-// 键盘跳跃
-document.body.addEventListener("keydown", function (event) {
+
+/**
+ * 键盘跳跃事件接收
+ * @param {object} event 键盘事件
+ */
+function jumpEvent(event) {
     if (event.key == " ") {
         keyPressJump(event.key)
     }
-})
+}
+
+// 键盘跳跃
+document.body.addEventListener("keydown", jumpEvent)
 // #endregion
 
 // #region 分数记录函数
 function scoreCount() {
-    sre.scoreCount(GLOBAL.cloudsDistance)
+    sre.scoreCount(GLOBAL.scoreBouns)
 }
 // #endregion
 
 // #region 资源回收函数
 function recycle() {
-
+    bg.recycle()
+    cld.recycle()
+    dino.recycle()
+    sre.recycle()
+    obs.recycle()
 }
 // #endregion
 
