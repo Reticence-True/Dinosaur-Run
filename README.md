@@ -4,7 +4,7 @@
 
 ## 企划
 
-### 恐龙快跑
+### 恐龙快跑 v0.1.0
 
 原生HTML + NodeJS + WebSocket + Express
 
