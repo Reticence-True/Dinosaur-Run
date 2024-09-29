@@ -21,6 +21,22 @@ app.get("/achievements", (req, res) => {
         })
 })
 
+// 设置成就文件
+app.post("/set-achievements", (req, res) => {
+    
+})
+
+// 参数配置文件
+app.get("/config", (req, res) => {
+    fs.readFile(`${__dirname}/../config.json`, 'utf-8')
+    .then((data) => {
+        res.send(data)
+    })
+    .catch((err) => {
+        throw new Error(err)
+    })
+})
+
 app.listen(port, () => {
     console.log(`${port}端口已被监听`);
 })

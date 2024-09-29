@@ -1,12 +1,21 @@
 import { GLOBAL } from "./global.js"
 
 let dinosaur = document.getElementsByClassName("dinosaur")[0]  // 获取小恐龙
+
 // 设置小恐龙跳跃时初速度
-let vertivalInitVelocity = Math.sqrt(2 * GLOBAL.g * GLOBAL.maxJumpHeight)
+let vertivalInitVelocity = undefined
+
 // 节流阀
 let animating = false
 let animationJumpId = undefined; // 动画请求ID
 let animationRunId = undefined; // 动画请求ID
+
+// 设置参数
+function setDinosaur(){
+    // 初速度
+    vertivalInitVelocity = Math.sqrt(2 * GLOBAL.g * GLOBAL.maxJumpHeight)
+}
+
 
 /* 小恐龙跳跃动画 */
 // 小恐龙跳跃函数
@@ -100,5 +109,6 @@ function recycle(){
 export var dino = {
     keyPressJump,
     dinosaurStop,
+    setDinosaur,
     recycle
 }

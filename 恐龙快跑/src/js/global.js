@@ -1,17 +1,8 @@
-/** 全局变量 */
-let GLOBALObj = {
-    // #region 配置文件可修改参数
-    // 设置小恐龙最大跳跃高度 (单位：px)
-    scoreBouns: 0.5, // 积分倍率
-    maxJumpHeight: 180, // 默认为 180
-    g: 1.63, // 重力加速度 // 默认为 9.8
-    isJump: false,
-    // 场上同时出现的最大云朵数
-    maxCloudNum: 10, // 默认 5
-    // 云朵之间距离偏移量
-    cloudsDistance: 60, // 默认 350
-    // #endregion
+import { config } from './config.js';
 
+/** 全局变量 */
+// 全局默认参数
+let GLOBALObj = {
     // 物体移动像素
     speed: 3,
     // 监测是否跳跃
@@ -23,15 +14,42 @@ let GLOBALObj = {
     gameStop: false,
 }
 
-// 代理
-const GLOBAL = new Proxy(GLOBALObj, {
-    get(obj, prop){
+let GLOBAL = {}
+
+// 全局默认参数
+const constGLOBAL = new Proxy(GLOBALObj, {
+    get(obj, prop) {
         return obj[prop]
-    },
-    set(obj, prop, nVal){
-        obj[prop] = nVal
-        return true
     }
 })
 
-export { GLOBAL };
+/**
+ * 设置配置文件参数
+ */
+async function setConfigVariables() {
+    try {
+        const varGLOABL = new Proxy(JSON.parse(await config.getConfigVariables()), {
+            get(obj, prop) {
+                return obj[prop]
+            },
+            set(obj, prop, nVal) {
+                // 检查
+                if (typeof nVal === 'number' && nVal >= 0) {
+                    obj[prop] = nVal
+                } else {
+                    obj[prop] = 0
+                }
+            }
+        })
+
+        // 合并参数
+        GLOBAL = Object.assign({}, constGLOBAL, varGLOABL)
+
+        return null
+
+    } catch (e) {
+        throw new Error(e)
+    }
+}
+
+export { GLOBAL, setConfigVariables };

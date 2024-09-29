@@ -1,4 +1,4 @@
-import { GLOBAL } from "./global.js"
+import { GLOBAL, setConfigVariables } from "./global.js"
 import { bg } from "./background.js"
 import { cld } from "./cloud.js"
 import { dino } from "./dinosaur.js"
@@ -22,8 +22,12 @@ async function gameInit() {
 
 // #region 游戏就绪
 async function gameReady() {
+    // 获取配置信息
+    await setConfigVariables()
     // 异步获取成就信息
-    await achi.getAchievements()
+    await achi.setAchievements()
+    // 获取小恐龙信息
+    dino.setDinosaur()
 }
 // #endregion
 
@@ -108,6 +112,7 @@ function spawnObject() {
 function keyPressJump(key) {
     if (!GLOBAL.isJump) {
         GLOBAL.isJump = true;
+
         // 成就检查
         achi.achievementCheck()
     }
@@ -119,7 +124,7 @@ function keyPressJump(key) {
  * @param {object} event 键盘事件
  */
 function jumpEvent(event) {
-    if (event.key == " ") {
+    if (event.key === " ") {
         keyPressJump(event.key)
     }
 }

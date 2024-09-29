@@ -1,0 +1,7 @@
+{
+    "scoreBouns": 0.5,
+    "maxJumpHeight": 180,
+    "g": 9.8,
+    "maxCloudNum": 5,
+    "cloudsDistance": 350
+}

@@ -1,27 +1,70 @@
 // achievement.js
 import { GLOBAL } from './global.js';
+import { config } from './config.js';
 
 const achievement = document.querySelector(".achievement-context") // 主成就
 const vice = document.querySelector(".vice-context") // 附加信息
 const achievementContainer = document.querySelector(".achievement-container")
 let achisList = [] // 成就信息
-let activeAchisList = [] // 达成的成就列表
 
-// 异步获取成就
-function asyncGetAchievements() {
-    return new Promise((resolve, reject) => {
-        $.get("/achievements", (data, status) => {
-            if (status === "success") {
-                resolve(data)
+// 监听成就数组
+class AchievementsList extends Array {
+    constructor(...args) {
+        super(...args)
+        this.isShowing = false // 正在显示成就
+    }
+
+    push(...args) {
+        super.push(...args)
+
+        // 如果成就没在展示，则显示数组第一个数据
+        if (!this.isShowing) {
+            this.activeAchievement(this.at(0))
+        }
+    }
+
+    /**
+     * 激活显示成就
+     * @param {object} achiInfo 激活的成就信息
+     */
+    activeAchievement(achiInfo) {
+        this.isShowing = true
+
+        // 成就显示
+        setTimeout(() => {
+            showAchievement(achiInfo.achievementName, achiInfo.viceName)
+        }, 0);
+
+        setTimeout(() => { // 延迟显示3s后隐藏
+            hideAchievement()
+            this.removeAchievement()
+        }, 3000);
+    }
+
+    /**
+     * 移除显示完毕的成就
+     */
+    removeAchievement() {
+        setTimeout(() => { // 延迟0.5s后删除
+            this.isShowing = false
+            this.shift()
+
+            // 检测成就列表是否为空
+            if (this.length) {
+                // 继续激活成就显示
+                this.activeAchievement(this.at(0))
             }
-        })
-    })
+        }, 500);
+    }
 }
 
+// 活跃成就数组
+let activeAchisList = new AchievementsList()
+
 // 获取成就信息
-async function getAchievements() {
+async function setAchievements() {
     try {
-        achisList = JSON.parse(await asyncGetAchievements())
+        achisList = JSON.parse(await config.getAchievements())
     } catch (e) {
         throw new Error(e)
     }
@@ -52,12 +95,8 @@ function toggleAnimate() {
 
 // #region 成就检查函数
 function achievementCheck() {
-    var showTime = 0; // 成就显示时间
-    var achievementDisplaying = 0 // 正在显示的成就数量
-
     // 成就：月球漫步
     var move2TheMoonObj = move2TheMoon();
-
     if (move2TheMoonObj && !move2TheMoon.achieving) {
         move2TheMoon.achieving = true
         activeAchisList.push(move2TheMoonObj)
@@ -75,32 +114,10 @@ function achievementCheck() {
         activeAchisList.push(cloudsDayObj)
     }
     // 成就：要下雨了？
-    var RainingRainingObj = RainingRaining();
-    if (RainingRainingObj && !RainingRainingObj.achieving) {
-        RainingRainingObj.achieving = true
-        activeAchisList.push(RainingRainingObj)
-    }
-
-    // 循环展示
-    if (achievementDisplaying >= 0) { // 当没有成就显示时，才重置新成就
-        activeAchisList.forEach(e => {
-            setTimeout(() => { // 成就显示
-                achievementDisplaying-- // p操作
-                showAchievement(e.achievementName, e.viceName)
-            }, showTime);
-
-            showTime += 3000
-
-            setTimeout(() => { // 延迟显示3s后隐藏
-                hideAchievement()
-                achievementDisplaying++ // v操作
-            }, showTime);
-
-            showTime += 1000
-
-        })
-        activeAchisList.length = 0 // 数组清空
-        showTime = 0; // 成就显示时间清空
+    var rainingRainingObj = rainingRaining();
+    if (rainingRainingObj && !rainingRainingObj.achieving) {
+        rainingRainingObj.achieving = true
+        activeAchisList.push(rainingRainingObj)
     }
 }
 // #endregion
@@ -149,7 +166,7 @@ function cloudsDay() {
  * @param {number} minCloudsDistance 云朵之间距离偏移量
  * @return {Object}
  */
-function RainingRaining() {
+function rainingRaining() {
     if (GLOBAL.maxCloudNum >= 13 && GLOBAL.cloudsDistance <= 45) {
         return achisList.filter(e => e.achievementName === "要下雨了？")[0]
     }
@@ -157,6 +174,6 @@ function RainingRaining() {
 }
 
 export var achi = {
-    getAchievements,
+    setAchievements,
     achievementCheck
 }
