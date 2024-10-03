@@ -6,9 +6,11 @@ import { sre } from "./score.js"
 import { obs } from "./obstacle.js"
 import { util } from "./functions.js"
 import { achi } from "./achievement.js"
+import { colli } from "./collision.js"
 
 let animationMovingID = undefined // 移动动画帧ID
 let spawnIntervalID = undefined // 生成对象定时器函数ID
+let collisionAnimationId = undefined // 碰撞监听器ID
 
 // #region 游戏初始化
 async function gameInit() {
@@ -38,6 +40,8 @@ function gamePlay() {
     scoreCount() // 积分开始
     // 成就检查
     achi.achievementCheck()
+    // 碰撞监听
+    collisionListener()
 }
 // #endregion
 
@@ -105,6 +109,31 @@ function spawnObject() {
             cld.createCloud()
         }
     }, GLOBAL.summomInterval)
+}
+// #endregions
+
+// #region 碰撞监听函数 
+/**
+ * 监听碰撞
+ * @param {Array<HTMLElement>} source 源HTML元素
+ * @param {HTMLElement} target 目标HTML元素
+ */
+function collisionListener() {
+    const source = dino.dinosaurCollisionBox()
+    const target = obs.firstObstacle()
+
+    // 目标存在，碰撞检测
+    if (target) {
+        // 碰撞检测
+        const collisionList = source.map(e => colli.boundingBox(e, target))
+        // 有碰撞产生
+        if (collisionList.indexOf(true) !== -1) {
+            gameover() // 游戏结束
+            return
+        }
+    }
+
+    collisionAnimationId = requestAnimationFrame(collisionListener)
 }
 // #endregion
 

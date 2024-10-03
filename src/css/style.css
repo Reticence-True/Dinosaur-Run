@@ -103,8 +103,58 @@
     /* 跑动动画 */
     animation: dinosaurRun 100ms steps(2) alternate infinite;
     overflow: visible;
+}
 
-    /* background-color: aqua; */
+/* 恐龙头碰撞箱 */
+.main .role .dinosaur .collision-head-box {
+    width: 44%;
+    height: 32%;
+    position: absolute;
+    top: 6%;
+    right: 5%;
+}
+
+/* 恐龙身体碰撞箱 */
+.main .role .dinosaur .collision-body-box {
+    width: 30%;
+    height: 30%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-30%, -50%);
+}
+
+/* 恐龙手碰撞箱 */
+.main .role .dinosaur .collision-body-box .collision-hand-box {
+    content: "";
+    width: 32%;
+    height: 30%;
+
+    position: absolute;
+    top: 51%;
+    right: -32%;
+    transform: translate(0, -50%);
+}
+
+/* 恐龙下半部分身体碰撞箱 */
+.main .role .dinosaur .collision-body-box .collision-btm-body-box {
+    content: "";
+    width: 162%;
+    height: 100%;
+    position: absolute;
+    top: 50%;
+    left: 2%;
+    transform: translate(-50%, -14%);
+}
+
+/* 恐龙脚碰撞箱 */
+.main .role .dinosaur .collision-foot-box {
+    width: 36%;
+    height: 20%;
+    position: absolute;
+    left: 43%;
+    bottom: 5%;
+    transform: translateX(-50%);
 }
 
 /* 跳跃动画 */
@@ -135,7 +185,7 @@
     background-image: url("../source/images/场景图2.png");
     background-position: -448px 0;
     position: absolute;
-    bottom: -5px;
+    bottom: -10px;
     /* 设置左侧位移 */
     transform: translateX(921px);
 }
@@ -146,7 +196,7 @@
     background-image: url("../source/images/场景图2.png");
     background-position: -482px 0;
     position: absolute;
-    bottom: -5px;
+    bottom: -10px;
     /* 设置左侧位移 */
     transform: translateX(921px);
 }
@@ -157,7 +207,7 @@
     background-image: url("../source/images/场景图2.png");
     background-position: -516px 0;
     position: absolute;
-    bottom: -5px;
+    bottom: -10px;
     /* 设置左侧位移 */
     transform: translateX(921px);
 }
@@ -168,7 +218,7 @@
     background-image: url("../source/images/场景图2.png");
     background-position: -550px 0;
     position: absolute;
-    bottom: -5px;
+    bottom: -10px;
     /* 设置左侧位移 */
     transform: translateX(921px);
 }
@@ -179,7 +229,7 @@
     background-image: url("../source/images/场景图2.png");
     background-position: -584px 0;
     position: absolute;
-    bottom: -5px; 
+    bottom: -10px;
     /* 设置左侧位移 */
     transform: translateX(921px);
 }
@@ -190,7 +240,7 @@
     background-image: url("../source/images/场景图2.png");
     background-position: -618px 0;
     position: absolute;
-    bottom: 0;
+    bottom: -10px;
     /* 设置左侧位移 */
     transform: translateX(921px);
 }

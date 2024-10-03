@@ -45,6 +45,14 @@ function obstacleMove(speed) {
 }
 
 /**
+ * 返回第一个障碍物
+ * @returns 如果场上有障碍物，则返回离恐龙最近的障碍物，否则返回null
+ */
+function firstObstacle(){
+    return obstacleStroage.length ? obstacleStroage[0] : null
+}
+
+/**
  * 资源回收函数
  */
 function recycle(){
@@ -57,5 +65,6 @@ function recycle(){
 export var obs = {
     createObstacle, // 障碍物创造函数
     obstacleMove, // 障碍物移动函数
+    firstObstacle,
     recycle
 }
