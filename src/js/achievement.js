@@ -1,11 +1,12 @@
 // achievement.js
 import { GLOBAL } from './global.js';
 import { config } from './config.js';
+import { util } from './functions.js';
 
 const achievement = document.querySelector(".achievement-context") // 主成就
 const vice = document.querySelector(".vice-context") // 附加信息
 const achievementContainer = document.querySelector(".achievement-container")
-let achisList = [] // 成就信息
+let achisListObject = {} // 成就信息
 
 // 监听成就数组
 class AchievementsList extends Array {
@@ -64,11 +65,24 @@ let activeAchisList = new AchievementsList()
 // 获取成就信息
 async function setAchievements() {
     try {
-        achisList = JSON.parse(await config.getAchievements())
+        const tempAchiData = JSON.parse(await config.getAchievements())
+        // 转换成就信息
+        tempAchiData.reduce((obj, jsonObj) => {
+            obj[jsonObj["achievementName"]] = jsonObj
+            return obj
+        }, achisListObject)
     } catch (e) {
         throw new Error(e)
     }
-    return
+}
+
+// 写回成就信息
+async function writeBackAchievements() {
+    try {
+        await config.updateAchievements(Object.values(achisListObject))
+    } catch(err) {
+        throw new Error(e)
+    }
 }
 
 // 成就显示
@@ -97,20 +111,20 @@ function toggleAnimate() {
 function achievementCheck() {
     // 成就：月球漫步
     var move2TheMoonObj = move2TheMoon();
-    if (move2TheMoonObj && !move2TheMoon.achieving) {
-        move2TheMoon.achieving = true
+    if (move2TheMoonObj && !move2TheMoonObj.achieving) {
+        move2TheMoonObj.achieving = true
         activeAchisList.push(move2TheMoonObj)
     }
     // 成就：飞入太空
     var flyInSpaceObj = flyInSpace();
-    if (flyInSpaceObj && !flyInSpace.achieving) {
-        flyInSpace.achieving = true
+    if (flyInSpaceObj && !flyInSpaceObj.achieving) {
+        flyInSpaceObj.achieving = true
         activeAchisList.push(flyInSpaceObj)
     }
     // 成就：今日多云
     var cloudsDayObj = cloudsDay();
-    if (cloudsDayObj && !cloudsDay.achieving) {
-        cloudsDay.achieving = true
+    if (cloudsDayObj && !cloudsDayObj.achieving) {
+        cloudsDayObj.achieving = true
         activeAchisList.push(cloudsDayObj)
     }
     // 成就：要下雨了？
@@ -131,7 +145,7 @@ function achievementCheck() {
  */
 function move2TheMoon() {
     if (GLOBAL.g === 1.63 && GLOBAL.isJump === true) {
-        return achisList.filter(e => e.achievementName === "月球漫步")[0]
+        return achisListObject["月球漫步"]
     }
     return null
 }
@@ -144,7 +158,7 @@ function move2TheMoon() {
  */
 function flyInSpace() {
     if (GLOBAL.maxJumpHeight >= 1500 && GLOBAL.isJump) {
-        return achisList.filter(e => e.achievementName === "飞入太空")[0]
+        return achisListObject["飞入太空"]
     }
     return null
 }
@@ -156,7 +170,7 @@ function flyInSpace() {
  */
 function cloudsDay() {
     if (GLOBAL.maxCloudNum >= 8 && GLOBAL.maxCloudNum <= 10 && GLOBAL.cloudsDistance >= 50 && GLOBAL.cloudsDistance <= 80) {
-        return achisList.filter(e => e.achievementName === "今日多云")[0]
+        return achisListObject["今日多云"]
     }
     return null
 }
@@ -168,12 +182,13 @@ function cloudsDay() {
  */
 function rainingRaining() {
     if (GLOBAL.maxCloudNum >= 13 && GLOBAL.cloudsDistance <= 45) {
-        return achisList.filter(e => e.achievementName === "要下雨了？")[0]
+        return achisListObject["要下雨了？"]
     }
     return null
 }
 
 export var achi = {
     setAchievements,
-    achievementCheck
+    achievementCheck,
+    writeBackAchievements
 }

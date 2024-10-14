@@ -74,6 +74,8 @@ function gameover() {
     document.body.removeEventListener("keydown", jumpEvent)
     // 资源回收
     recycle()
+
+    achi.writeBackAchievements()
 }
 // #endregion
 

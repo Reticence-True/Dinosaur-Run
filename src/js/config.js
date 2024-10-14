@@ -11,9 +11,13 @@ function getAchievements() {
 }
 
 // 异步更新成就信息
-function setAchievements() {
+function updateAchievements(achisData) {
     return new Promise((resolve, reject) => {
-        
+        $.post("/set-achievements", {achisData: JSON.stringify(achisData)}, (data, status) => {
+            if (status === "success") {
+                resolve(data)
+            }
+        })
     })
 }
 
@@ -30,5 +34,6 @@ function getConfigVariables() {
 
 export const config = {
     getAchievements,
-    getConfigVariables
+    updateAchievements,
+    getConfigVariables,
 }
