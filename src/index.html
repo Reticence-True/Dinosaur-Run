@@ -8,7 +8,9 @@
     <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="./css/animate.min.css" />
     <link rel="stylesheet" href="./css/style.css">
-    <title>恐龙快跑 v0.2.2</title>
+    <link rel="stylesheet" href="./css/gameReady.css">
+    <link rel="stylesheet" href="./css/gamePlay.css">
+    <title>恐龙快跑 v0.2.3</title>
     <script type="module" src="./js/jquery.js" defer></script>
     <script type="module" src="./js/main.js" defer></script>
 </head>
@@ -16,52 +18,78 @@
 <body>
     <!-- 主容器 -->
     <div class="main">
-        <!-- 背景 -->
-        <div class="background">
-            <!-- 地面背景 -->
-            <div class="ground"></div>
-            <!-- 背景云朵 -->
-            <div class="cloud"></div>
-            <!-- 障碍物 -->
-            <div class="obstacle"></div>
-        </div>
-        <!-- 角色 -->
-        <div class="role">
-            <!-- 小恐龙 -->
-            <div class="dinosaur">
-                <!-- 头碰撞箱 -->
-                <div class="collision-head-box"></div>
-                <!-- 身体碰撞箱 -->
-                <div class="collision-body-box">
-                    <div class="collision-hand-box"></div>
-                    <div class="collision-btm-body-box"></div>
+        <!-- 游戏预备 -->
+        <div class="game-ready">
+            <div class="ready-dinosaur"></div>
+            <div class="play" ></div>
+            <div class="g-button rank-list">
+                <div class="g-btn-img rank-img"></div>
+                排行榜
+            </div>
+            <div class="g-button achis-list">
+                <div class="g-btn-img achis-img"></div>
+                成就榜
+            </div>
+            <div class="title">
+                <div class="zh-title">
+                    <span>恐</span>
+                    <span>龙</span>
+                    <span>快</span>
+                    <span>跑</span>
                 </div>
-                <!--  脚碰撞箱 -->
-                <div class="collision-foot-box"></div>
+                <div class="en-title">Dinosaur Run</div>
             </div>
         </div>
-        <!-- 计分板 -->
-        <div class="score-board">
-            <div class="score score1"></div>
-            <div class="score score2"></div>
-            <div class="score score3"></div>
-            <div class="score score4"></div>
-            <div class="score score5"></div>
-            <div class="score score6"></div>
-        </div>
-        <!-- 成就框 -->
-        <div class="animate__animated animate__fadeInDown achievement-container" style="display: none;">
-            <div class="achievement-title">
-                <span class="award-achievement">获得成就</span>
+        <!-- 游戏开始 -->
+        <div class="game-play" style="display: none;">
+            <!-- 背景 -->
+            <div class="background">
+                <!-- 地面背景 -->
+                <div class="ground"></div>
+                <!-- 背景云朵 -->
+                <div class="cloud"></div>
+                <!-- 障碍物 -->
+                <div class="obstacle"></div>
             </div>
-            <div class="achievement">
-                <div class="award-icon"></div>
-                <div class="context">
-                    <div class="achievement-context"></div>
-                    <div class="vice-context"></div>
+            <!-- 角色 -->
+            <div class="role">
+                <!-- 小恐龙 -->
+                <div class="dinosaur">
+                    <!-- 头碰撞箱 -->
+                    <div class="collision-head-box"></div>
+                    <!-- 身体碰撞箱 -->
+                    <div class="collision-body-box">
+                        <div class="collision-hand-box"></div>
+                        <div class="collision-btm-body-box"></div>
+                    </div>
+                    <!--  脚碰撞箱 -->
+                    <div class="collision-foot-box"></div>
+                </div>
+            </div>
+            <!-- 计分板 -->
+            <div class="score-board">
+                <div class="score score1"></div>
+                <div class="score score2"></div>
+                <div class="score score3"></div>
+                <div class="score score4"></div>
+                <div class="score score5"></div>
+                <div class="score score6"></div>
+            </div>
+            <!-- 成就框 -->
+            <div class="animate__animated animate__fadeInDown achievement-container" style="display: none;">
+                <div class="achievement-title">
+                    <span class="award-achievement">获得成就</span>
+                </div>
+                <div class="achievement">
+                    <div class="award-icon"></div>
+                    <div class="context">
+                        <div class="achievement-context"></div>
+                        <div class="vice-context"></div>
+                    </div>
                 </div>
             </div>
         </div>
+        <!-- 游戏结束 -->
     </div>
 </body>
 

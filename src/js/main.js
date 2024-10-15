@@ -36,8 +36,8 @@ async function gameReady() {
 // #region 游戏开始
 function gamePlay() {
     spawnObject()
-    move()
-    scoreCount() // 积分开始
+    // move()
+    // scoreCount() // 积分开始
     // 成就检查
     achi.achievementCheck()
     // 碰撞监听

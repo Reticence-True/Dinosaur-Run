@@ -1,0 +1,97 @@
+/* 游戏预备样式 */
+.game-ready {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    inset: 0;
+}
+
+.game-ready .title {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translate(-50%);
+    color: #535353;
+    display: flex;
+    flex-direction: column;
+    user-select: none;
+}
+
+.game-ready .title .zh-title > span {
+    font-size: 50px;
+    font-weight: bold;
+    margin: 0 20px;
+}
+
+.game-ready .title .en-title {
+    font-size: 20px;
+    text-align: center;
+}
+
+.game-ready .ready-dinosaur {
+    width: 144px;
+    height: 144px;
+    background: url("../source/images/恐龙.png");
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.game-ready .g-button {
+    color: #535353;
+    font-weight: bold;
+    text-align: center;
+    border: 3px solid #535353;
+    border-radius: 10px;
+    display: flex;
+    padding: 5px 30px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.game-ready .g-button .g-btn-img {
+    width: 18px;
+    height: 18px;
+    align-self: center;
+    margin-right: 5px;
+}
+
+.game-ready .rank-list {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.game-ready .rank-list .rank-img {
+    background: url(../source/images/rank.svg) center no-repeat;
+    background-size: cover;
+}
+
+.game-ready .achis-list {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.game-ready .achis-list .achis-img {
+    background: url(../source/images/奖杯.svg) center no-repeat;
+    background-size: cover;
+}
+
+.game-ready .play {
+    width: 35px;
+    height: 35px;
+    background: url(../source/images/play.svg) no-repeat;
+    background-size: cover;
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(0);
+    transform-origin: center;
+    cursor: pointer;
+    transition: all 350ms ease-in-out;
+}
+
+.game-ready .play:hover {
+    transform: translate(-50%, -50%) rotate(180deg);
+}
