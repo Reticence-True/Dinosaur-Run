@@ -1,6 +1,6 @@
 ## 恐龙快跑（仿Google小游戏扩展）
 
-version v0.2.3
+version v0.3.1
 
 ## 技术
 
