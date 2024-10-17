@@ -1,5 +1,5 @@
 // achievement.js
-import { GLOBAL } from './global.js';
+import { GLOBAL, GAME_STATUS } from './global.js';
 import { config } from './config.js';
 import { util } from './functions.js';
 
@@ -7,6 +7,7 @@ const achievement = document.querySelector(".achievement-context") // 主成就
 const vice = document.querySelector(".vice-context") // 附加信息
 const achievementContainer = document.querySelector(".achievement-container")
 let achisListObject = {} // 成就信息
+let isChecking = false // 是否正在检查成就
 
 // 监听成就数组
 class AchievementsList extends Array {
@@ -80,7 +81,7 @@ async function setAchievements() {
 async function writeBackAchievements() {
     try {
         await config.updateAchievements(Object.values(achisListObject))
-    } catch(err) {
+    } catch (err) {
         throw new Error(e)
     }
 }
@@ -109,29 +110,38 @@ function toggleAnimate() {
 
 // #region 成就检查函数
 function achievementCheck() {
-    // 成就：月球漫步
-    var move2TheMoonObj = move2TheMoon();
-    if (move2TheMoonObj && !move2TheMoonObj.achieving) {
-        move2TheMoonObj.achieving = true
-        activeAchisList.push(move2TheMoonObj)
-    }
-    // 成就：飞入太空
-    var flyInSpaceObj = flyInSpace();
-    if (flyInSpaceObj && !flyInSpaceObj.achieving) {
-        flyInSpaceObj.achieving = true
-        activeAchisList.push(flyInSpaceObj)
-    }
-    // 成就：今日多云
-    var cloudsDayObj = cloudsDay();
-    if (cloudsDayObj && !cloudsDayObj.achieving) {
-        cloudsDayObj.achieving = true
-        activeAchisList.push(cloudsDayObj)
-    }
-    // 成就：要下雨了？
-    var rainingRainingObj = rainingRaining();
-    if (rainingRainingObj && !rainingRainingObj.achieving) {
-        rainingRainingObj.achieving = true
-        activeAchisList.push(rainingRainingObj)
+    // 成就未在检查状态 且 游戏开始
+    if (!isChecking && GLOBAL.gameStatus === GAME_STATUS.Playing) {
+        // 检查开始：修改检查标志位
+        isChecking = true
+
+        // 成就：月球漫步
+        var move2TheMoonObj = move2TheMoon();
+        if (move2TheMoonObj && !move2TheMoonObj.achieving) {
+            move2TheMoonObj.achieving = true
+            activeAchisList.push(move2TheMoonObj)
+        }
+        // 成就：飞入太空
+        var flyInSpaceObj = flyInSpace();
+        if (flyInSpaceObj && !flyInSpaceObj.achieving) {
+            flyInSpaceObj.achieving = true
+            activeAchisList.push(flyInSpaceObj)
+        }
+        // 成就：今日多云
+        var cloudsDayObj = cloudsDay();
+        if (cloudsDayObj && !cloudsDayObj.achieving) {
+            cloudsDayObj.achieving = true
+            activeAchisList.push(cloudsDayObj)
+        }
+        // 成就：要下雨了？
+        var rainingRainingObj = rainingRaining();
+        if (rainingRainingObj && !rainingRainingObj.achieving) {
+            rainingRainingObj.achieving = true
+            activeAchisList.push(rainingRainingObj)
+        }
+
+        // 检查结束：修改检查标志位
+        isChecking = false
     }
 }
 // #endregion
@@ -144,7 +154,7 @@ function achievementCheck() {
  * @return {Object}
  */
 function move2TheMoon() {
-    if (GLOBAL.g === 1.63 && GLOBAL.isJump === true) {
+    if (GLOBAL.g === 1.63 && GLOBAL.isJump) {
         return achisListObject["月球漫步"]
     }
     return null

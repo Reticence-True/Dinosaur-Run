@@ -10,6 +10,16 @@ function groundMove(speed) {
 // #endregion
 
 /**
+ * 播放地面动画
+ * @returns 动画对象
+ */
+function playGroundAnimation(){
+    let groundAni = ground.getAnimations().length ? ground.getAnimations()[0] : undefined
+    groundAni.play()
+    return groundAni
+}
+
+/**
  * 资源回收函数
  */
 function recycle(){
@@ -18,5 +28,6 @@ function recycle(){
 
 export var bg = {
     groundMove, // 地面移动
+    playGroundAnimation,
     recycle
 }

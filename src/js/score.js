@@ -1,4 +1,4 @@
-import { GLOBAL } from "./global.js";
+import { GLOBAL, GAME_STATUS } from "./global.js";
 
 const scoreObj = document.querySelectorAll(".score") // 积分对象
 let score = 0; // 积分
@@ -13,7 +13,7 @@ let animationId = undefined; // 动画请求ID
  */
 function scoreCount(scoreBouns) {
     // 游戏既不暂停，也不结束
-    if (GLOBAL.gameStop) {
+    if (GLOBAL.gameStatus !== GAME_STATUS.Playing) {
         cancelAnimationFrame(animationId)
         animationId = undefined
         return

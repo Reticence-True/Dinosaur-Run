@@ -1,4 +1,4 @@
-import { GLOBAL } from "./global.js"
+import { GLOBAL, GAME_STATUS } from "./global.js"
 
 let dinosaur = document.getElementsByClassName("dinosaur")[0]  // 获取小恐龙
 
@@ -6,7 +6,6 @@ let dinosaur = document.getElementsByClassName("dinosaur")[0]  // 获取小恐�
 let vertivalInitVelocity = undefined
 
 // 节流阀
-let animating = false
 let animationJumpId = undefined; // 动画请求ID
 let animationRunId = undefined; // 动画请求ID
 
@@ -47,7 +46,7 @@ function dinosaurUpJump(initVelocity, initTime) {
     initTime += 0.08
 
     // 游戏停止
-    if (GLOBAL.gameStop) {
+    if (GLOBAL.gameStatus !== GAME_STATUS.Playing && GLOBAL.gameStatus !== GAME_STATUS.Ready) {
         return
     }
 
@@ -74,7 +73,7 @@ function dinosaurDownFall(initVelocity, initTime, maxHeight) {
     initTime += 0.08
 
     // 游戏停止
-    if (GLOBAL.gameStop) {
+    if (GLOBAL.gameStatus !== GAME_STATUS.Playing && GLOBAL.gameStatus !== GAME_STATUS.Ready) {
         return
     }
 
@@ -82,23 +81,22 @@ function dinosaurDownFall(initVelocity, initTime, maxHeight) {
         requestAnimationFrame(() => {
             dinosaurDownFall(initVelocity, initTime, maxHeight)
         })
-    } else {
+    }
+    else {
         dinosaur.style.transform = `translateY(0)`
-        animating = false
-        GLOBAL.isJump = false
         dinosaur.style.animationName = "dinosaurRun"
+        // 只有游戏运行中才修改跳跃状态
+        GLOBAL.isJump = false
     }
 }
 
 // 键盘跳跃
-function keyPressJump(key) {
-    if (key == " ") {
-        if (!animating) {
-            animating = true
-            GLOBAL.isJump = true
-            dinosaur.style.animationName = "dinosaurJump" // 小恐龙站立动画
-            dinosaurJump(vertivalInitVelocity, 0)
-        }
+function keyPressJump() {
+    if (!GLOBAL.isJump) {
+        // 只有游戏运行中才修改跳跃状态
+        GLOBAL.isJump = true
+        dinosaur.style.animationName = "dinosaurJump" // 小恐龙站立动画
+        dinosaurJump(vertivalInitVelocity, 0)
     }
 }
 
@@ -116,7 +114,6 @@ function dinosaurStop() {
  */
 function recycle() {
     vertivalInitVelocity = undefined
-    animating = undefined
     animationJumpId = undefined
     animationRunId = undefined
 }

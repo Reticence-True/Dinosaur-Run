@@ -1,6 +1,13 @@
 import { config } from './config.js';
 
 /** 全局变量 */
+// 游戏状态枚举
+const GAME_STATUS = {
+    Ready: 0,
+    Playing: 1,
+    Pause: 2,
+    Over: 3
+}
 // 全局默认参数
 let GLOBALObj = {
     // 物体移动像素
@@ -10,8 +17,8 @@ let GLOBALObj = {
     // 物体生成时间
     summomInterval: 0,
     preSummonInterval: 0,
-    // 游戏停止标志
-    gameStop: false,
+    // 游戏状态
+    gameStatus: GAME_STATUS.Ready
 }
 
 let GLOBAL = {}
@@ -52,4 +59,4 @@ async function setConfigVariables() {
     }
 }
 
-export { GLOBAL, setConfigVariables };
+export { GLOBAL, GAME_STATUS, setConfigVariables };

@@ -1,8 +1,8 @@
 /* 游戏运行样式 */
-/* 设置背景 */
 .game-play {
     width: 100%;
     height: 100%;
+    position: relative;
 }
 
 .game-play .background {
@@ -28,7 +28,16 @@
     background-image: url("../source/images/场景图3.png");
     /* 设置背景偏移量 */
     background-position: 0 93px;
+    animation: groundAnimation 1s linear;
+}
 
+@keyframes groundAnimation {
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 100%;
+    }
 }
 
 /* 设置背景云朵 */
@@ -87,9 +96,27 @@
     left: 20px;
     /* 设置外边距 */
     margin-bottom: 0;
-    /* 跑动动画 */
-    animation: dinosaurJump 100ms steps(2) alternate infinite;
     overflow: visible;
+    animation: dinosaurJump 100ms steps(2) infinite alternate;
+}
+
+/* 跳跃动画 */
+@keyframes dinosaurJump {
+    from,
+    to {
+        background-position-x: -1680px;
+    }
+}
+
+/* 跑动动画 */
+@keyframes dinosaurRun {
+    from {
+        background-position-x: -1856px;
+    }
+
+    to {
+        background-position-x: -2032px;
+    }
 }
 
 /* 恐龙头碰撞箱 */
@@ -142,26 +169,6 @@
     left: 43%;
     bottom: 5%;
     transform: translateX(-50%);
-}
-
-/* 跳跃动画 */
-@keyframes dinosaurJump {
-
-    from,
-    to {
-        background-position-x: -1680px;
-    }
-}
-
-/* 跑动动画 */
-@keyframes dinosaurRun {
-    from {
-        background-position: -1856px 0;
-    }
-
-    to {
-        background-position: -2032px 0;
-    }
 }
 
 /* 设置障碍物 */
